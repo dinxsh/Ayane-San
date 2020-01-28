@@ -67,7 +67,7 @@ async def clear(context, amount=5):
 #As long as the moderator has the right permissions the member will be banned/kicked
 @bot.command()
 @commands.has_permissions(kick_members=True)   
-async def kick(context, meember : discord.Member, *, reason=None):
+async def kick(context, member : discord.Member, *, reason=None):
     await member.kick(reason=reason)
     print(f'Member {member} kicked')
 
@@ -90,12 +90,27 @@ async def unban(context, *, member):
         if (toUnban.name, toUnban.descriminator) == (name, descriminator):
             await context.guild.unban(toUnban)
 
-#@bot.command()
-#@commands.has_permissions(ban_members=True)
-#async def softban(context, *, member, time):
+#
+@bot.command()
+@commands.has_permissions(ban_members=True)
+async def softban(context, member : discord.Member, time):
+    await bot.ban(member, reason=reason)
 
+    await asyncio.sleep(time)
 
-#ADD SOFTBAN | CLEAN MESSAGES
+    bannedList = await context.guild.bans()
+    name, descriminator = member.split('#')
+
+    for unbanEntry in bannedList:
+        toUnban = unbanEntry.User
+        if (toUnban.name, toUnban.descriminator) == (name, descriminator):
+            await context.guild.unban(toUnban)
+
+#
+@bot.command()
+@commands.has_permissions(ban_members=True)
+async def clean(context, delete):
+    
 
 #|------------------TASKS------------------| 
 #This is a task which runs every 5 seconds (change this to however long you require
