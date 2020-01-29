@@ -1,5 +1,6 @@
 import discord
 import os
+import asyncio
 
 from discord.ext import tasks, commands
 from discord.utils import get
@@ -14,6 +15,7 @@ bot.remove_command('help')
 #Variable containing statuses for the bot to cycle through
 status = cycle(['status 1', "status 2", "status3"])
 
+censored_words = ['!']
 #|--------------------EVENTS--------------------|
 
 @bot.event
@@ -24,9 +26,9 @@ async def on_ready():
     print("Bot is ready to use.")
 
 @bot.event
-async def on_member_join(context,member):
+async def on_member_join(member):
     #When a member joins the discord, they will get mentioned with this welcome message
-    await context.send(f'Member {member.mention} has joined!')
+    print(f'Member {member.mention} has joined!')
 
 #This event waits for commands to be issued, if a specific command requires a permission or arguement
 #This event will be invoked to tell the user that they dont have the required permissions
@@ -69,48 +71,42 @@ async def clear(context, amount=5):
 @commands.has_permissions(kick_members=True)   
 async def kick(context, member : discord.Member, *, reason=None):
     await member.kick(reason=reason)
-    print(f'Member {member} kicked')
+    await context.send(f'Member {member} kicked')
 
 @bot.command()
 @commands.has_permissions(ban_members=True)   
 async def ban(context, member : discord.Member, *, reason=None):
     await member.ban(reason=reason)
-    print(f'Member {member} kicked')
+    await context.send(f'{member} has been banned')
 
-#Unbanning a member is done via typing ./unban and the member name, this command will retrieve the ban list from the server
-#It will check whether the user is in the banned list and then will unban them if so
+#Unbanning a member is done via typing ./unban and the ID of the banned member
 @bot.command()
 @commands.has_permissions(ban_members=True)   
-async def unban(context, *, member):
-    bannedList = await context.guild.bans()
-    name, descriminator = member.split('#')
-
-    for unbanEntry in bannedList:
-        toUnban = unbanEntry.User
-        if (toUnban.name, toUnban.descriminator) == (name, descriminator):
-            await context.guild.unban(toUnban)
-
+async def unban(context, id : int):
+    user = await bot.fetch_user(id)
+    await context.guild.unban(user)
+    await context.send(f'{user.name} has been unbanned')
+    
 #
 @bot.command()
 @commands.has_permissions(ban_members=True)
-async def softban(context, member : discord.Member, time):
-    await bot.ban(member, reason=reason)
-
-    await asyncio.sleep(time)
-
-    bannedList = await context.guild.bans()
-    name, descriminator = member.split('#')
-
-    for unbanEntry in bannedList:
-        toUnban = unbanEntry.User
-        if (toUnban.name, toUnban.descriminator) == (name, descriminator):
-            await context.guild.unban(toUnban)
+async def softban(context, member : discord.Member, days, reason=None):
+    #Asyncio uses seconds for its sleep function
+    #multiplying the num of days the user enters by the num of seconds in a day
+    days * 86400 
+    await member.ban(reason=reason)
+    await context.send(f'{member} has been softbanned')
+    await asyncio.sleep(days)
+    print("Time to unban")
+    await member.unban()
+    await context.send(f'{member} softban has finished')
 
 #
 @bot.command()
 @commands.has_permissions(ban_members=True)
 async def clean(context, delete):
-    
+    print("Clean unfinished")
+
 
 #|------------------TASKS------------------| 
 #This is a task which runs every 5 seconds (change this to however long you require
