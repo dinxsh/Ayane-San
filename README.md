@@ -9,6 +9,11 @@
    - status change (in progress)
    - moderation logs (in progress)
  
+# Modules to install
+   - Discord
+   - Itertools
+   - asyncio
+  
 # How to setup
    To setup this bot yourself simply clone the repo add the token from the discord bot bot you have created via discord:
    
