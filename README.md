@@ -25,6 +25,10 @@
    ```
    bot = commands.Bot(command_prefix = 'insert_preifx_here')
    ```
+# To run
+   Ensure that the script is executable: ```chmod +x main.py```
+   
+   Run the script: ```./main.py```
    
 # How to use
    Commands:
