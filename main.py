@@ -15,7 +15,9 @@ bot.remove_command('help')
 #Variable containing statuses for the bot to cycle through
 status = cycle(['status 1', "status 2", "status3"])
 
-censored_words = ['!']
+with open("words_blacklist.txt") as f:
+    blacklist = [word.strip().lower() for word in f.readlines()]
+
 #|--------------------EVENTS--------------------|
 
 @bot.event
@@ -29,6 +31,7 @@ async def on_ready():
 async def on_member_join(member):
     #When a member joins the discord, they will get mentioned with this welcome message
     print(f'Member {member.mention} has joined!')
+
 
 #This event waits for commands to be issued, if a specific command requires a permission or arguement
 #This event will be invoked to tell the user that they dont have the required permissions
@@ -87,7 +90,7 @@ async def unban(context, id : int):
     await context.guild.unban(user)
     await context.send(f'{user.name} has been unbanned')
     
-#
+#Bans a member for a specific number of days
 @bot.command()
 @commands.has_permissions(ban_members=True)
 async def softban(context, member : discord.Member, days, reason=None):
@@ -105,8 +108,17 @@ async def softban(context, member : discord.Member, days, reason=None):
 @bot.command()
 @commands.has_permissions(ban_members=True)
 async def clean(context, delete):
-    print("Clean unfinished")
+    print("unfinished")
 
+#This command will add a word to the blacklist to prevent users from typing that specific word
+@bot.command()
+@commands.has_permissions(ban_members=True)
+async def blacklist_add(context, *, word):
+    with open("words_blacklist.txt", "a") as f:
+        f.write("\n"+word)
+    f.close()
+
+    await context.send(f'Word "{word}" added to blacklist.')
 
 #|------------------TASKS------------------| 
 #This is a task which runs every 5 seconds (change this to however long you require
@@ -116,4 +128,4 @@ async def change_status():
     await bot.change_presence(activity=discord.Game(next(status)))
 
 #Enter your bot token from discord here, so when the code runs, your discord bot will come online
-bot.run('')
+bot.run('NjQzNzcxNTc5MjcyMTM0Njg2.XcqVPA.4pkvq7KHPix3qgFrgj839S-qBm4')
