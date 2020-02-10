@@ -34,9 +34,15 @@ async def on_member_join(member):
 
 @bot.event
 async def on_message(message):
+    channel = message.channel
     for word in blacklist:
-        if message.content == word:
-            print("Message contains profanity!!")
+        if word in message.content:
+            bot_message = await channel.send("message contains profanity, deleting ...")
+            await message.delete()
+            await asyncio.sleep(3)
+            await bot_message.delete()
+            
+    await bot.process_commands(message)
 
 
 #This event waits for commands to be issued, if a specific command requires a permission or arguement
@@ -135,3 +141,4 @@ async def change_status():
 
 #Enter your bot token from discord here, so when the code runs, your discord bot will come online
 bot.run('')
+
