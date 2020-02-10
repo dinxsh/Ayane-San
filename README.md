@@ -5,9 +5,8 @@
    - kick
    - Ban/unban/softban
    - Clear
-   - Mute/unmute (in progress)
-   - status change (in progress)
-   - moderation logs (in progress)
+   - Profanity filter
+   - Roles (In progress)
  
 # Modules to install
    - Discord
@@ -37,3 +36,4 @@
    - Unban: ./unban member_name
    - Softban: ./softban member_name time
    - Clear: ./clear 20 (this means 20 messages will be deleted)
+   - Blacklist: ./blacklist_add word (word is where you would type what you want to blacklist
