@@ -6,17 +6,15 @@ from discord.ext import tasks, commands
 from discord.utils import get
 from itertools import cycle
 
+prefix = './'
 #Comman prefix is setup here, this is what you have to type to issue a command to the bot
-bot = commands.Bot(command_prefix = './')
+bot = commands.Bot(command_prefix = prefix)
 
 #Removed the help command to create a custom help guide
 bot.remove_command('help')
 
 #Variable containing statuses for the bot to cycle through
 status = cycle(['status 1', "status 2", "status3"])
-
-with open("words_blacklist.txt") as f:
-    blacklist = [word.strip().lower() for word in f.readlines()]
 
 #|--------------------EVENTS--------------------|
 
@@ -34,14 +32,22 @@ async def on_member_join(member):
 
 @bot.event
 async def on_message(message):
-    channel = message.channel
-    for word in blacklist:
-        if word in message.content:
-            bot_message = await channel.send("message contains profanity, deleting ...")
-            await message.delete()
-            await asyncio.sleep(3)
-            await bot_message.delete()
-            
+    if prefix in message.content:
+        print("This is a command")
+        await bot.process_commands(message)
+    else:
+        with open("words_blacklist.txt") as bf:
+            blacklist = [word.strip().lower() for word in bf.readlines()]
+        bf.close()
+
+        channel = message.channel
+        for word in blacklist:
+            if word in message.content:
+                bot_message = await channel.send("message contains profanity, deleting ...")
+                await message.delete()
+                await asyncio.sleep(3)
+                await bot_message.delete()
+                
     await bot.process_commands(message)
 
 
