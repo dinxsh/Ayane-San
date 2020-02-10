@@ -122,12 +122,6 @@ async def softban(context, member : discord.Member, days, reason=None):
     await member.unban()
     await context.send(f'{member} softban has finished')
 
-#
-@bot.command()
-@commands.has_permissions(ban_members=True)
-async def clean(context, delete):
-    print("unfinished")
-
 #This command will add a word to the blacklist to prevent users from typing that specific word
 @bot.command()
 @commands.has_permissions(ban_members=True)
