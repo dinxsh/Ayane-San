@@ -32,6 +32,12 @@ async def on_member_join(member):
     #When a member joins the discord, they will get mentioned with this welcome message
     print(f'Member {member.mention} has joined!')
 
+@bot.event
+async def on_message(message):
+    for word in blacklist:
+        if message.content == word:
+            print("Message contains profanity!!")
+
 
 #This event waits for commands to be issued, if a specific command requires a permission or arguement
 #This event will be invoked to tell the user that they dont have the required permissions
@@ -128,4 +134,4 @@ async def change_status():
     await bot.change_presence(activity=discord.Game(next(status)))
 
 #Enter your bot token from discord here, so when the code runs, your discord bot will come online
-bot.run('NjQzNzcxNTc5MjcyMTM0Njg2.XcqVPA.4pkvq7KHPix3qgFrgj839S-qBm4')
+bot.run('')
