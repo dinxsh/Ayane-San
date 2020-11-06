@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix = prefix)
 bot.remove_command('help')
 
 #Variable containing statuses for the bot to cycle through
-status = cycle(['status 1', "status 2", "status3"])
+status = cycle(["status 1", "status 2", "status3"])
 
 #|--------------------EVENTS--------------------|
 
