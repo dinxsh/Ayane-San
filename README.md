@@ -37,3 +37,7 @@
    - Softban: ./softban member_name time
    - Clear: ./clear 20 (this means 20 messages will be deleted)
    - Blacklist: ./blacklist_add word (word is where you would type what you want to blacklist
+
+# Notes
+
+- Migrated from old github account
