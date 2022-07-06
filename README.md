@@ -1,4 +1,4 @@
-# Discord-Moderation-bot
+# Ayane-San
    Basic discord bot written in python and discord.py to provide useful moderation tools to a discord server
 
 # Features
