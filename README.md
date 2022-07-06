@@ -20,7 +20,7 @@
    bot.run('insert_token_here')
    ```
     
-   To change the command prefix (default = './') to something such as "/" or "~":
+   To change the command prefix (default = '!') to something such as "/" or "~":
    ```
    bot = commands.Bot(command_prefix = 'insert_preifx_here')
    ```
@@ -31,13 +31,10 @@
    
 # How to use
    Commands:
-   - Kick: ./kick member_name
-   - Ban: ./ban  member_name
-   - Unban: ./unban member_name
-   - Softban: ./softban member_name time
-   - Clear: ./clear 20 (this means 20 messages will be deleted)
-   - Blacklist: ./blacklist_add word (word is where you would type what you want to blacklist
+   - Kick: !kick member_name
+   - Ban: !ban  member_name
+   - Unban: !unban member_name
+   - Softban: !softban member_name time
+   - Clear: !clear 20 (this means 20 messages will be deleted)
+   - Blacklist: !blacklist_add word (word is where you would type what you want to blacklist)
 
-# Notes
-
-- Migrated from old github account
